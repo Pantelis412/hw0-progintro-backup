@@ -1,38 +1,52 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-int main(int argc, char **argv){
+int main(int argc, char **argv)
+{
     if (argc != 3)
         printf("Programm needs to be called as : ./Collatz left_limit right_limit");
 
-int left_limit = atoi(argv[1]);           
-int right_limit = atoi(argv[2]);
+    int left_limit = atoi(argv[1]);
+    int right_limit = atoi(argv[2]);
+    int *array = malloc(sizeof(int) * 100000000);
 
-if (left_limit < 1 || right_limit < 1){     /*If one of the limits is non-positive the programm prints "0" and terminates*/
+    if (left_limit < 1 || right_limit < 1)
+    { /*If one of the limits is non-positive the programm prints "0" and terminates*/
 
-    printf("0\n");
-    return 1;
-}
-long long n;
-int max_counter, temp_counter, i;
-max_counter = 1;
-for (i = left_limit ; i <= right_limit ; i++ ){
-    temp_counter = 1;
-    n = i;
+        printf("0\n");
+        return 1;
+    }
+    long long n;
+    int max_counter, temp_counter, i;
+    max_counter = 1;
+    for (i = left_limit; i <= right_limit; i++)
+    {
+        temp_counter = 1;
+        n = i;
 
-    while (n != 1){
-        if (n%2==0)
-            n=n/2;
-        else{
-            n=3*n+1;
-            n=n/2;
+        while (n != 1)
+        {
+            if (n<100000000 && array[n] != 0)
+            {
+                temp_counter = array[n] + temp_counter - 1;
+                break;
+            }
+
+            if (n % 2 == 0)
+                n = n / 2;
+            else
+            {
+                n = 3 * n + 1;
+                n = n / 2;
+                temp_counter++;
+            }
             temp_counter++;
-        }temp_counter++;
-    
-   } 
-   if (temp_counter > max_counter)
-        max_counter = temp_counter;
-}
-printf("%d\n", max_counter);
-return 0;
+        }
+        
+        array[i] = temp_counter;
+        if (temp_counter > max_counter)
+            max_counter = temp_counter;
+    }
+    printf("%d\n", max_counter);
+    return 0;
 }
