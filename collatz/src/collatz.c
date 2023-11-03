@@ -9,6 +9,7 @@ int left_limit = atoi(argv[1]);
 int right_limit = atoi(argv[2]);
 
 if (left_limit < 1 || right_limit < 1){     /*If one of the limits is non-positive the programm prints "0" and terminates*/
+
     printf("0\n");
     return 1;
 }
